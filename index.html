@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Whisper Bot</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <style>
     :root {
       --main-bg: #0d1117;
@@ -20,13 +21,25 @@
       margin: 0;
       background: var(--main-bg);
       color: var(--text-light);
+      position: relative;
+      z-index: 1;
+    }
+    #tsparticles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
     }
     header {
+      position: relative;
       background: linear-gradient(135deg, #1e1e2f, #12141c);
       color: white;
       text-align: center;
       padding: 4rem 2rem;
       animation: fadeIn 1s ease-in;
+      z-index: 1;
     }
     header img {
       width: 120px;
@@ -37,6 +50,7 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 3rem;
       margin: 1rem 0 0.5rem;
+      text-shadow: 0 0 10px var(--accent);
     }
     header p {
       font-size: 1.2rem;
@@ -53,17 +67,20 @@
       font-weight: 600;
       font-size: 1rem;
       transition: background 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 0 8px var(--accent);
     }
     .btn:hover {
       background: #4752d3;
       transform: scale(1.1);
-      box-shadow: 0 0 12px rgba(88,101,242,0.6);
+      box-shadow: 0 0 15px var(--accent);
     }
     section {
       padding: 4rem 1.5rem;
       max-width: 900px;
       margin: auto;
       animation: fadeUp 1s ease-out;
+      position: relative;
+      z-index: 1;
     }
     h2 {
       font-size: 2rem;
@@ -143,10 +160,11 @@
   </style>
 </head>
 <body>
+  <div id="tsparticles"></div>
   <header>
     <img src="logo.png" alt="The Whisper Bot Logo">
     <h1>The Whisper Bot</h1>
-    <p>the only bot you will need</p>
+    <p id="tagline"></p>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
       <a href="privacy.html" class="btn">Privacy Policy</a>
       <a href="https://discord.gg/AuGaRtFj2d" class="btn">Join Server</a>
@@ -190,5 +208,55 @@
   <footer>
     <p>&copy; 2025 The Whisper Bot. All rights reserved.</p>
   </footer>
+
+  <script>
+    // Typewriter animation
+    const tagline = document.getElementById("tagline");
+    const text = "the only bot you will need";
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        tagline.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 60);
+      }
+    }
+    type();
+
+    // Particles background
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: false },
+      background: {
+        color: "transparent"
+      },
+      particles: {
+        number: { value: 60 },
+        color: { value: "#5865f2" },
+        shape: { type: "circle" },
+        opacity: { value: 0.6 },
+        size: { value: { min: 1, max: 4 } },
+        move: {
+          enable: true,
+          speed: 0.6,
+          direction: "none",
+          outModes: { default: "bounce" }
+        },
+        links: {
+          enable: true,
+          color: "#5865f2",
+          distance: 120,
+          opacity: 0.3,
+          width: 1
+        }
+      },
+      interactivity: {
+        events: {
+          onHover: { enable: true, mode: "repulse" },
+          resize: true
+        }
+      },
+      detectRetina: true
+    });
+  </script>
 </body>
 </html>
