@@ -26,10 +26,12 @@
       color: white;
       text-align: center;
       padding: 4rem 2rem;
+      animation: fadeIn 1s ease-in;
     }
     header img {
       width: 120px;
       border-radius: 1rem;
+      animation: pulse 2s infinite;
     }
     header h1 {
       font-family: 'Orbitron', sans-serif;
@@ -54,12 +56,14 @@
     }
     .btn:hover {
       background: #4752d3;
-      transform: scale(1.05);
+      transform: scale(1.1);
+      box-shadow: 0 0 12px rgba(88,101,242,0.6);
     }
     section {
       padding: 4rem 1.5rem;
       max-width: 900px;
       margin: auto;
+      animation: fadeUp 1s ease-out;
     }
     h2 {
       font-size: 2rem;
@@ -79,6 +83,11 @@
       padding: 1.5rem;
       border-radius: 1rem;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    ul.features li:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
     }
     .commands-table {
       width: 100%;
@@ -101,9 +110,23 @@
       text-align: center;
       padding: 2rem;
       font-size: 0.9rem;
+      animation: fadeIn 1s ease-in;
     }
     a {
       color: var(--accent);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     @media (max-width: 600px) {
       header h1 {
@@ -120,12 +143,14 @@
   </style>
 </head>
 <body>
-  <header>
-    <img src="/logo.png" alt="The Whisper Bot Logo">
-    <h1>The Whisper Bot</h1>
-    <p>the only bot you will need</p>
+  <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
+    <a href="privacy.html" class="btn">Privacy Policy</a>
+    <a href="https://discord.gg/AuGaRtFj2d" class="btn">Join Server</a>
+  </div>
+  <div style="margin-top: 1rem;">
     <a href="https://discord.com/oauth2/authorize?client_id=1339152375151329355&permissions=8&integration_type=0&scope=bot" class="btn">Invite to Server</a>
-  </header>
+  </div>
+</header>
 
   <section>
     <h2>Features</h2>
@@ -135,6 +160,7 @@
       <li><strong>Staff Overwatch</strong><br>Logs and monitors staff actions</li>
       <li><strong>Games & Trivia</strong><br>Keep your server entertained</li>
       <li><strong>Anonymous Messages</strong><br>Let users speak freely without being known</li>
+      <li><strong>Ticket System</strong><br>Allow users to open and manage support tickets easily</li>
     </ul>
   </section>
 
@@ -154,7 +180,7 @@
 
   <section>
     <h2>Support</h2>
-    <p>Need help or want to report a bug? Join our <a href="https://discord.gg/bZ8vmn24">Support Server</a>.</p>
+    <p>Need help or want to report a bug? Join our <a href="https://discord.gg/AuGaRtFj2d">Support Server</a>.</p>
   </section>
 
   <footer>
@@ -162,3 +188,4 @@
   </footer>
 </body>
 </html>
+
