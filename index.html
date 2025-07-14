@@ -5,53 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Whisper Bot</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+  <meta name="description" content="The Whisper Bot – the only Discord bot you need for moderation, fun, and anonymity. Free to use and easy to set up!">
+  <meta property="og:title" content="The Whisper Bot">
+  <meta property="og:description" content="The only Discord bot you'll need: automod, anti-nuke, anonymous messaging, and more.">
+  <meta property="og:image" content="https://thewhisperbot.com/logo.png">
+  <meta property="og:url" content="https://thewhisperbot.com/">
+  <meta name="twitter:card" content="summary_large_image">
   <style>
     :root {
       --main-bg: #0d1117;
       --accent: #5865f2;
+      --accent2: #43b581;
       --text-light: #c9d1d9;
       --card-bg: #161b22;
+      --flake1: #5865f2;
+      --flake2: #43b581;
+      --flake3: #c9d1d9;
     }
-    * {
-      box-sizing: border-box;
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
     }
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
+      min-height: 100vh;
       background: var(--main-bg);
       color: var(--text-light);
       position: relative;
+      overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, #1e1e2f 60%, #12141c 100%);
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem 3rem 2rem;
+      position: relative;
       z-index: 1;
     }
-    #tsparticles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-    header {
-  position: relative;
-  background: linear-gradient(135deg, #1e1e2f, #12141c);
-  color: white;
-  text-align: center;
-  padding: 4rem 2rem;
-  animation: fadeIn 1s ease-in;
-  z-index: 1;
-}
     header img {
       width: 120px;
       border-radius: 1rem;
-      animation: pulse 2s infinite;
+      box-shadow: 0 4px 16px #0005;
     }
     header h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3rem;
       margin: 1rem 0 0.5rem;
-      text-shadow: 0 0 10px var(--accent);
+      letter-spacing: 0.04em;
     }
     header p {
       font-size: 1.2rem;
@@ -59,27 +61,66 @@
       margin-bottom: 2rem;
     }
     .btn {
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
       color: white;
-      padding: 0.8rem 2rem;
+      padding: 0.8rem 2.4rem;
       border: none;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 1rem;
-      transition: background 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 0 8px var(--accent);
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px #5865f244;
+      letter-spacing: 0.02em;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      display: inline-block;
     }
-    .btn:hover {
-      background: #4752d3;
-      transform: scale(1.1);
-      box-shadow: 0 0 15px var(--accent);
+    .btn:hover, .btn:focus-visible {
+      background: linear-gradient(90deg, #4752d3, #37a17e);
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 4px 16px #5865f288;
+    }
+    /* Fancy animated status badge */
+    .fancy-status-bar {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent2), var(--accent) 80%);
+      color: #fff;
+      padding: 0.45em 1.5em;
+      border-radius: 1.8em;
+      font-size: 1.10em;
+      font-weight: bold;
+      margin: 1.4em auto 0.7em auto;
+      text-align: center;
+      box-shadow: 0 2px 12px #43b58133;
+      animation: gradmove 3s linear infinite;
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes gradmove {
+      0% {background-position: 0 0;}
+      100% {background-position: 200% 0;}
+    }
+    .fancy-status-bar .dot {
+      display: inline-block;
+      width: 0.85em;
+      height: 0.85em;
+      border-radius: 50%;
+      margin-right: 0.6em;
+      background: #43b581;
+      box-shadow: 0 0 12px #43b58199;
+      animation: pulse 1.3s infinite;
+      vertical-align: middle;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1);}
+      50% { transform: scale(1.2);}
+      100% { transform: scale(1);}
     }
     section {
       padding: 4rem 1.5rem;
       max-width: 900px;
       margin: auto;
-      animation: fadeUp 1s ease-out;
       position: relative;
       z-index: 1;
     }
@@ -88,6 +129,7 @@
       margin-bottom: 1rem;
       border-left: 4px solid var(--accent);
       padding-left: 0.5rem;
+      letter-spacing: 0.03em;
     }
     ul.features {
       list-style: none;
@@ -100,12 +142,16 @@
       background: var(--card-bg);
       padding: 1.5rem;
       border-radius: 1rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px #0002;
+      font-size: 1.09em;
+      line-height: 1.6;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
     }
     ul.features li:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      transform: translateY(-5px) scale(1.025);
+      box-shadow: 0 8px 28px #5865f233;
     }
     .commands-table {
       width: 100%;
@@ -113,38 +159,134 @@
       background: var(--card-bg);
       border-radius: 1rem;
       overflow: hidden;
+      box-shadow: 0 2px 10px #0002;
+      margin-bottom: 2.5rem;
     }
     .commands-table th, .commands-table td {
       padding: 1rem;
       text-align: left;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #222a;
     }
     .commands-table th {
       background: #20262e;
+      font-size: 1.02em;
+      letter-spacing: 0.02em;
+    }
+    .commands-table tr:last-child td {
+      border-bottom: none;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+      margin: 2rem 0 1rem 0;
+    }
+    .gallery img {
+      max-width: 270px;
+      border-radius: 1rem;
+      box-shadow: 0 4px 16px #0005;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .gallery img:hover {
+      transform: scale(1.06) rotate(-2deg);
+      box-shadow: 0 8px 32px #5865f222;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-bottom: 1.6rem;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: linear-gradient(115deg, #23272a 60%, #20262e 100%);
+      padding: 1.1em 2em 1em 2em;
+      border-radius: 1em;
+      color: #fff;
+      font-size: 1.15em;
+      font-weight: 600;
+      box-shadow: 0 2px 8px #5865f233;
+      min-width: 170px;
+      text-align: center;
+      margin-bottom: 0.6em;
+    }
+    .stat-card .num {
+      font-size: 2.2em;
+      color: var(--accent);
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 0.3em;
+      display: block;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-shadow: 0 2px 10px #5865f288;
+    }
+    .testimonial-box {
+      background: var(--card-bg);
+      border-radius: 1em;
+      box-shadow: 0 2px 10px #0003;
+      padding: 1.5em 2em 1.2em 2em;
+      font-style: italic;
+      color: #b8c2cc;
+      margin: 2em auto 1em auto;
+      max-width: 650px;
+      position: relative;
+    }
+    .testimonial-box::before {
+      content: "“";
+      font-size: 3em;
+      color: var(--accent2);
+      position: absolute;
+      top: -0.5em;
+      left: 0.2em;
+      opacity: 0.18;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .testimonial-author {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1em;
+      margin-top: 1em;
+      display: block;
+      letter-spacing: 0.03em;
+    }
+    .faq {
+      margin: 2em 0 2em 0;
+    }
+    .faq h3 {
+      font-size: 1.13em;
+      font-weight: 600;
+      color: var(--accent2);
+      margin-top: 1.7em;
+      margin-bottom: 0.4em;
+      letter-spacing: 0.01em;
+    }
+    .faq p {
+      margin: 0 0 0.5em 0;
     }
     footer {
       background: #0a0f1a;
       color: white;
       text-align: center;
       padding: 2rem;
-      font-size: 0.9rem;
-      animation: fadeIn 1s ease-in;
+      font-size: 0.92rem;
+      position: relative;
+      z-index: 2;
     }
     a {
       color: var(--accent);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+    @media (max-width: 750px) {
+      .stats-row {
+        flex-direction: column;
+        gap: 1.3rem;
+      }
+      .gallery {
+        flex-direction: column;
+        gap: 1.1rem;
+      }
     }
     @media (max-width: 600px) {
       header h1 {
@@ -157,25 +299,52 @@
       .commands-table th, .commands-table td {
         font-size: 0.9rem;
       }
+      .stat-card {
+        font-size: 1em;
+        min-width: unset;
+      }
+      .testimonial-box {
+        padding: 1.1em 1em 1em 1em;
+        font-size: 0.96em;
+      }
+    }
+    /* Particle flakes background */
+    #flakes-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.45;
     }
   </style>
 </head>
 <body>
-  <div id="tsparticles"></div>
+  <canvas id="flakes-canvas"></canvas>
   <header>
-    <img src="logo.png" alt="The Whisper Bot Logo">
+    <img src="/logo.png" alt="The Whisper Bot Logo">
     <h1>The Whisper Bot</h1>
-    <p id="tagline"></p>
-    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-      <a href="privacy.html" class="btn">Privacy Policy</a>
-      <a href="https://discord.gg/AuGaRtFj2d" class="btn">Join Server</a>
-    </div>
-    <div style="margin-top: 1rem;">
-      <a href="https://discord.com/oauth2/authorize?client_id=1339152375151329355&permissions=8&integration_type=0&scope=bot" class="btn">Invite to Server</a>
-    </div>
+    <div class="fancy-status-bar"><span class="dot"></span>Online</div>
+    <p>the only bot you will need</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1339152375151329355&permissions=8&integration_type=0&scope=bot" class="btn">Invite to Server</a>
   </header>
 
   <section>
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="num">127</span>
+        Servers
+      </div>
+      <div class="stat-card">
+        <span class="num">20,800+</span>
+        Users
+      </div>
+      <div class="stat-card">
+        <span class="num">99.99%</span>
+        Uptime
+      </div>
+    </div>
     <h2>Features</h2>
     <ul class="features">
       <li><strong>AutoMod</strong><br>Automatic moderation for spam, links, and more</li>
@@ -183,7 +352,6 @@
       <li><strong>Staff Overwatch</strong><br>Logs and monitors staff actions</li>
       <li><strong>Games & Trivia</strong><br>Keep your server entertained</li>
       <li><strong>Anonymous Messages</strong><br>Let users speak freely without being known</li>
-      <li><strong>Ticket System</strong><br>Allow users to open and manage support tickets easily</li>
     </ul>
   </section>
 
@@ -197,107 +365,122 @@
         <tr><td>/message</td><td>Send an anonymous message</td></tr>
         <tr><td>/echo</td><td>Bot repeats your message</td></tr>
         <tr><td>/mock</td><td>Mock someone's text for fun</td></tr>
+        <tr><td>/ticket</td><td>Create a support ticket channel</td></tr>
+        <tr><td>/mod</td><td>Moderation utilities (kick, ban, mute, etc.)</td></tr>
       </tbody>
     </table>
   </section>
 
   <section>
-    <h2>Support</h2>
-    <p>Need help or want to report a bug? Join our <a href="https://discord.gg/AuGaRtFj2d">Support Server</a>.</p>
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <img src="/demo1.png" alt="Demo 1">
+      <img src="/demo2.png" alt="Demo 2">
+    </div>
+  </section>
+
+  <section>
+    <h2>What People Say</h2>
+    <div class="testimonial-box">
+      Whisper Bot keeps our server safe and fun. The anonymous messaging is a hit for our community!
+      <span class="testimonial-author">— Luna, Server Owner</span>
+    </div>
+    <div class="testimonial-box">
+      Staff logs and anti-nuke saved us from a raid. Absolutely recommended for every server!
+      <span class="testimonial-author">— Zane, Mod Team Lead</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <div class="faq">
+      <h3>Is The Whisper Bot free?</h3>
+      <p>Yes! The bot is free to use for all Discord servers. Premium features may be added in the future, but all core moderation and fun features are free.</p>
+      <h3>How do I get started?</h3>
+      <p>Just invite the bot using the button above, give it the required permissions, and start using the slash commands in your server!</p>
+      <h3>How is my data handled?</h3>
+      <p>We respect your privacy. No messages are stored except for moderation logs and only for the server's staff. See <a href="privacy.html">Privacy Policy</a>.</p>
+      <h3>Where can I get support?</h3>
+      <p>Join our <a href="https://discord.gg/bZ8vmn24">Support Server</a> for help, suggestions, or bug reports.</p>
+    </div>
   </section>
 
   <footer>
+    <p>
+      <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
+      <a href="tos.html">Terms of Service</a>
+    </p>
     <p>&copy; 2025 The Whisper Bot. All rights reserved.</p>
   </footer>
-
   <script>
-    // Typewriter animation
-    const tagline = document.getElementById("tagline");
-    const text = "the only bot you will need";
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        tagline.textContent += text.charAt(i);
-        i++;
-        setTimeout(type, 60);
+    // Particle flakes animation
+    const colors = [
+      getComputedStyle(document.documentElement).getPropertyValue('--flake1').trim(),
+      getComputedStyle(document.documentElement).getPropertyValue('--flake2').trim(),
+      getComputedStyle(document.documentElement).getPropertyValue('--flake3').trim()
+    ];
+    const flakesCount = window.innerWidth > 800 ? 48 : 20;
+    const flakes = [];
+    const canvas = document.getElementById('flakes-canvas');
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
+
+    function randomInt(a,b) { return Math.floor(Math.random()*(b-a+1))+a; }
+
+    function createFlake() {
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.8 + 1.1,
+        color: colors[randomInt(0, colors.length-1)],
+        speed: Math.random() * 0.6 + 0.3,
+        sway: Math.random() * 1.1 + 0.2,
+        swayStep: Math.random() * Math.PI * 2
+      };
+    }
+
+    function resetFlake(flake) {
+      flake.x = Math.random() * w;
+      flake.y = -flake.r;
+      flake.r = Math.random() * 1.8 + 1.1;
+      flake.color = colors[randomInt(0, colors.length-1)];
+      flake.speed = Math.random() * 0.6 + 0.3;
+      flake.sway = Math.random() * 1.1 + 0.2;
+      flake.swayStep = Math.random() * Math.PI * 2;
+    }
+
+    function updateFlakes() {
+      ctx.clearRect(0,0,w,h);
+      for (let f of flakes) {
+        f.swayStep += 0.02 + 0.007 * f.sway;
+        f.y += f.speed;
+        f.x += Math.sin(f.swayStep) * f.sway;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, 2*Math.PI);
+        ctx.fillStyle = f.color;
+        ctx.shadowColor = f.color;
+        ctx.shadowBlur = 8;
+        ctx.globalAlpha = 0.80;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
+        if (f.y > h+10) resetFlake(f);
       }
+      requestAnimationFrame(updateFlakes);
     }
-    type();
 
-    // Particles background
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: false },
-      background: {
-        color: "transparent"
-      },
-      particles: {
-        number: { value: 60 },
-        color: { value: "#5865f2" },
-        shape: { type: "circle" },
-        opacity: { value: 0.6 },
-        size: { value: { min: 1, max: 4 } },
-        move: {
-          enable: true,
-          speed: 0.6,
-          direction: "none",
-          outModes: { default: "bounce" }
-        },
-        links: {
-          enable: true,
-          color: "#5865f2",
-          distance: 120,
-          opacity: 0.3,
-          width: 1
-        }
-      },
-      interactivity: {
-        events: {
-          onHover: { enable: true, mode: "repulse" },
-          resize: true
-        }
-      },
-      detectRetina: true
-    });
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      if (flakes.length < flakesCount)
+        while (flakes.length < flakesCount) flakes.push(createFlake());
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Init flakes
+    for (let i=0;i<flakesCount;i++) flakes.push(createFlake());
+    updateFlakes();
   </script>
-<canvas id="cursorTrail"></canvas>
-<script>
-  const canvas = document.getElementById("cursorTrail");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  canvas.style.position = "fixed";
-  canvas.style.top = 0;
-  canvas.style.left = 0;
-  canvas.style.zIndex = 9999;
-  canvas.style.pointerEvents = "none";
-
-  let trail = [];
-
-  window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-
-  window.addEventListener("mousemove", (e) => {
-    trail.push({ x: e.clientX, y: e.clientY, alpha: 1 });
-  });
-
-  function animateTrail() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < trail.length; i++) {
-      const t = trail[i];
-      ctx.beginPath();
-      ctx.arc(t.x, t.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 122, 0, ${t.alpha})`;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = `rgba(255, 122, 0, ${t.alpha})`;
-      ctx.fill();
-      t.alpha -= 0.02;
-      if (t.alpha <= 0) trail.splice(i, 1);
-    }
-    requestAnimationFrame(animateTrail);
-  }
-  animateTrail();
-</script>
 </body>
 </html>
